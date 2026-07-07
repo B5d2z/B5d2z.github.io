@@ -87,52 +87,39 @@ applyLang('ar');
     localStorage.setItem(TWIMG_CACHE_KEY, src);
   }
 
-  var lastUrl = localStorage.getItem(TWIMG_CACHE_KEY) || GITHUB_FALLBACK;
-  setImg(lastUrl);
-
-  // --- Strategy 1: Try unavatar.io ---
-  function tryUnavatar() {
-    var probe = new Image();
-    probe.onload = function () {
-      setImg('https://unavatar.io/twitter/' + handle + '?t=' + Date.now());
-    };
-    probe.onerror = function () {
-      tryFetchFromX();
-    };
-    probe.src = 'https://unavatar.io/twitter/' + handle;
+  var lastUrl = localStorage.getItem(TWIMG_CACHE_KEY);
+  if (lastUrl) {
+    img.src = lastUrl;
+    if (favicon) favicon.href = lastUrl;
+    if (ogImage) ogImage.content = lastUrl;
   }
 
-  // --- Strategy 2: Fetch X page via CORS proxy ---
+  // --- Try unavatar.io with cache bust ---
+  function tryUnavatar() {
+    var u = 'https://unavatar.io/twitter/' + handle + '?t=' + Date.now();
+    var probe = new Image();
+    probe.onload = function () { setImg(u); };
+    probe.onerror = tryFetchFromX;
+    probe.src = u;
+  }
+
+  // --- Fetch X page via CORS proxy for og:image ---
   function tryFetchFromX() {
     fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://x.com/' + handle))
-      .then(function (r) {
-        if (!r.ok) throw new Error('proxy ' + r.status);
-        return r.text();
-      })
+      .then(function (r) { if (!r.ok) throw new Error(); return r.text(); })
       .then(function (html) {
         var m = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i);
         if (!m) m = html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i);
         if (m && m[1]) setImg(m[1].replace(/_normal\./, '_400x400.'));
       })
-      .catch(function () {});
+      .catch(function () { if (img.src.indexOf('githubusercontent') === -1) setImg(GITHUB_FALLBACK); });
   }
-
-  // --- Strategy 3: Known PBS URL ---
-  function tryKnownPBS() {
-    var probe = new Image();
-    probe.onload = function () {
-      setImg('https://pbs.twimg.com/profile_images/2074031620038750208/He0DYwBK_400x400.jpg');
-    };
-    probe.src = 'https://pbs.twimg.com/profile_images/2074031620038750208/He0DYwBK_400x400.jpg';
-  }
-
-  setTimeout(tryUnavatar, 300);
-  setTimeout(tryKnownPBS, 600);
 
   img.addEventListener('error', function () {
     if (img.src.indexOf('githubusercontent') === -1) setImg(GITHUB_FALLBACK);
   });
 
+  setTimeout(tryUnavatar, 300);
   setInterval(tryUnavatar, 300000);
 })();
 
