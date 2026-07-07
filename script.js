@@ -16,6 +16,8 @@ var translations = {
     opensource_desc: 'مشاريع مفتوحة المصدر متاحة على GitHub.',
     software_title: 'تطوير البرمجيات',
     software_desc: 'Python · C++ · Flutter — حلول عملية وأدوات تخدم المستخدم.',
+    support_title: 'دعم مادي',
+    support_sub: 'creators.sa',
     footer: '© 2026 B5T ALANZI'
   },
   en: {
@@ -34,6 +36,8 @@ var translations = {
     opensource_desc: 'Open source projects available on GitHub.',
     software_title: 'Software Development',
     software_desc: 'Python · C++ · Flutter — practical tools built for real-world use.',
+    support_title: 'Support Me',
+    support_sub: 'creators.sa',
     footer: '© 2026 B5T ALANZI'
   }
 };
