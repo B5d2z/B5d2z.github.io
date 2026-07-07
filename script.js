@@ -233,7 +233,7 @@ function renderRepos(lang) {
         return;
       }
 
-      reposCache = repos.filter(function (r) { return !r.fork; })
+      reposCache = repos.filter(function (r) { return !r.fork && r.name !== 'B5d2z.github.io'; })
         .sort(function (a, b) {
           var s = (b.stargazers_count || 0) - (a.stargazers_count || 0);
           return s !== 0 ? s : new Date(b.updated_at) - new Date(a.updated_at);
