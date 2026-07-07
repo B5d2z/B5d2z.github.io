@@ -1,3 +1,12 @@
+/* ===== Custom Fonts ===== */
+@font-face {
+  font-family: 'Thmanyah Serif Display';
+  src: url('fonts/thmanyahserifdisplay-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===== Reset & Base ===== */
 *,
 *::before,
@@ -333,9 +342,9 @@ body::before {
 }
 
 .section-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 13px;
+  font-family: 'Thmanyah Serif Display', 'Space Grotesk', 'IBM Plex Sans Arabic', sans-serif;
   font-weight: 700;
+  font-size: 14px;
   color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -346,11 +355,9 @@ body::before {
 }
 
 :lang(ar) .section-title {
-  font-family: '29LT Bukra', 'Cairo', 'IBM Plex Sans Arabic', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 0;
   text-transform: none;
+  letter-spacing: 0;
+  font-size: 15px;
 }
 
 [dir="ltr"] .section-title {
