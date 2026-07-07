@@ -525,3 +525,48 @@ body::before {
     max-width: 920px;
   }
 }
+
+/* ===== Featured Card (دعم مادي) ===== */
+.link-card.featured {
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.link-card.featured::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(110deg, transparent 40%, rgba(200, 169, 110, 0.2) 50%, transparent 60%);
+  animation: shine 3s linear infinite;
+  pointer-events: none;
+}
+
+.link-card.featured .link-card-icon {
+  background: var(--accent-dim);
+  animation: pulse 2s infinite;
+}
+
+.link-card.featured .link-card-icon svg {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+
+.link-card.featured:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 25px var(--accent-glow), 0 0 50px rgba(200, 169, 110, 0.1);
+  transform: translateY(-4px) scale(1.02);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); box-shadow: 0 0 15px var(--accent-glow); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shine {
+  to { left: 100%; }
+}
