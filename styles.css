@@ -327,6 +327,14 @@ body::before {
   transform: scaleX(-1);
 }
 
+.project-card .link-card-subtitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  overflow: hidden;
+}
+
 .static-card {
   cursor: default;
 }

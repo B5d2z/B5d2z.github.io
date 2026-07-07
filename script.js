@@ -208,7 +208,7 @@ function renderRepos(lang) {
       '<div class="link-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>' +
       '<div class="link-card-content">' +
         '<span class="link-card-title">' + esc(repo.name) + '</span>' +
-        '<span class="link-card-subtitle" style="white-space:normal;line-height:1.4">' + esc(desc) + '</span>' +
+        '<span class="link-card-subtitle">' + esc(desc) + '</span>' +
         langHtml +
       '</div>' +
       '<svg class="link-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
