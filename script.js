@@ -67,69 +67,6 @@ function applyLang(lang) {
 
 applyLang('ar');
 
-// ===== Auto-sync Avatar & Favicon from X/Twitter =====
-(function syncTwitterAvatar() {
-  var img = document.getElementById('profileImg');
-  if (!img) return;
-
-  var handle = img.getAttribute('data-tw');
-  if (!handle) return;
-
-  var GITHUB_FALLBACK = 'https://avatars.githubusercontent.com/u/250705836?v=4';
-  var TWIMG_CACHE_KEY = 'x_avatar_' + handle;
-  var CACHE_AGE = 3600000; // 1 hour
-  var favicon = document.getElementById('favicon');
-  var ogImage = document.querySelector('meta[property="og:image"]');
-
-  function setImg(src) {
-    img.src = src;
-    if (favicon) favicon.href = src;
-    if (ogImage) ogImage.content = src;
-    localStorage.setItem(TWIMG_CACHE_KEY, src);
-    localStorage.setItem(TWIMG_CACHE_KEY + '_ts', Date.now());
-  }
-
-  var cachedUrl = localStorage.getItem(TWIMG_CACHE_KEY);
-  var cachedTs = localStorage.getItem(TWIMG_CACHE_KEY + '_ts');
-  var cacheValid = cachedTs && (Date.now() - Number(cachedTs) < CACHE_AGE);
-
-  if (cachedUrl && cacheValid) {
-    img.src = cachedUrl;
-    if (favicon) favicon.href = cachedUrl;
-    if (ogImage) ogImage.content = cachedUrl;
-  } else if (cachedUrl) {
-    img.src = cachedUrl;
-  }
-
-  // --- Primary: Twitter Syndication API (no token needed) ---
-  function trySyndication() {
-    fetch('https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names=' + handle)
-      .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
-      .then(function (data) {
-        if (data && data[0] && data[0].profile_image_url) {
-          setImg(data[0].profile_image_url.replace(/_normal\./, '_400x400.'));
-        } else { tryUnavatar(); }
-      })
-      .catch(tryUnavatar);
-  }
-
-  // --- Fallback: unavatar.io ---
-  function tryUnavatar() {
-    var u = 'https://unavatar.io/twitter/' + handle + '?t=' + Date.now();
-    var probe = new Image();
-    probe.onload = function () { setImg(u); };
-    probe.onerror = function () { if (img.src.indexOf('githubusercontent') === -1) setImg(GITHUB_FALLBACK); };
-    probe.src = u;
-  }
-
-  img.addEventListener('error', function () {
-    if (img.src.indexOf('githubusercontent') === -1) setImg(GITHUB_FALLBACK);
-  });
-
-  setTimeout(trySyndication, 100);
-  setInterval(trySyndication, 300000);
-})();
-
 // ===== GitHub Repos Loader (cached, language-aware) =====
 var reposCache = null;
 var GITHUB_USER = 'B5d2z';
