@@ -52,7 +52,7 @@ function applyLang(lang) {
   var dict = translations[lang];
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  langLabel.textContent = lang === 'ar' ? 'EN' : 'AR';
+  langLabel.textContent = lang === 'ar' ? 'EN' : 'ع';
   document.querySelectorAll('[data-i18n]').forEach(function (el) {
     var key = el.getAttribute('data-i18n');
     if (dict[key]) el.textContent = dict[key];
