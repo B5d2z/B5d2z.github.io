@@ -59,7 +59,7 @@ function applyLang(lang) {
   });
 }
 
-  langToggle.addEventListener('click', function () {
+langToggle.addEventListener('click', function () {
     applyLang(currentLang === 'ar' ? 'en' : 'ar');
     // Re-render repos with new language
     if (typeof renderRepos === 'function') renderRepos(currentLang);
